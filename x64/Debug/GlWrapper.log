@@ -1,3 +1,21 @@
 ﻿  main.cpp
-C:\Users\26116\source\repos\GlWrapper\main.cpp(21,32): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-  GlWrapper.vcxproj -> C:\Users\26116\source\repos\GlWrapper\x64\Debug\GlWrapper.exe
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(55,4): warning C4838: conversion from 'float' to 'GLuint' requires a narrowing conversion
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(55,4): warning C4244: 'initializing': conversion from 'float' to 'GLuint', possible loss of data
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(55,11): warning C4838: conversion from 'float' to 'GLuint' requires a narrowing conversion
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(55,11): warning C4244: 'initializing': conversion from 'float' to 'GLuint', possible loss of data
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(55,17): warning C4838: conversion from 'float' to 'GLuint' requires a narrowing conversion
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(55,17): warning C4244: 'initializing': conversion from 'float' to 'GLuint', possible loss of data
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(56,3): warning C4838: conversion from 'float' to 'GLuint' requires a narrowing conversion
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(56,3): warning C4244: 'initializing': conversion from 'float' to 'GLuint', possible loss of data
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(56,10): warning C4838: conversion from 'float' to 'GLuint' requires a narrowing conversion
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(56,10): warning C4244: 'initializing': conversion from 'float' to 'GLuint', possible loss of data
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(56,16): warning C4838: conversion from 'float' to 'GLuint' requires a narrowing conversion
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(56,16): warning C4244: 'initializing': conversion from 'float' to 'GLuint', possible loss of data
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(57,3): warning C4838: conversion from 'float' to 'GLuint' requires a narrowing conversion
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(57,3): warning C4244: 'initializing': conversion from 'float' to 'GLuint', possible loss of data
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(57,9): warning C4838: conversion from 'float' to 'GLuint' requires a narrowing conversion
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(57,9): warning C4244: 'initializing': conversion from 'float' to 'GLuint', possible loss of data
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(57,15): warning C4838: conversion from 'float' to 'GLuint' requires a narrowing conversion
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(57,15): warning C4244: 'initializing': conversion from 'float' to 'GLuint', possible loss of data
+C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(68,32): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  GlWrapper.vcxproj -> C:\Users\alex\Documents\GitHub\OpenGLWrapper\x64\Debug\GlWrapper.exe
