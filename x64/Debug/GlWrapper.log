@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\Users\26116\source\repos\GlWrapper\main.cpp(21,32): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  GlWrapper.vcxproj -> C:\Users\26116\source\repos\GlWrapper\x64\Debug\GlWrapper.exe

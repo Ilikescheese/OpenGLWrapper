@@ -1,0 +1,2 @@
+C:\Users\26116\source\repos\GlWrapper\x64\Debug\GlWrapper.exe
+C:\Users\26116\source\repos\GlWrapper\x64\Debug\GlWrapper.pdb
