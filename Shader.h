@@ -4,7 +4,7 @@
 class Shader
 {
 	GLuint m_program;
-	const char *m_loadFile(const char *path);
+	std::string m_loadFile(const char *path);
 	void m_compile(GLuint shader);
 public:
 	void use() const;

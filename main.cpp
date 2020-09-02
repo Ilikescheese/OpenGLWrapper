@@ -3,13 +3,16 @@
 #include <iostream>
 
 #include "Shader.h"
+#include "VAObj.h"
+
 void errCallback(int, const char *message) {
 	std::cerr << "GLFW error:" << message << '\n';
 }
 
 static void APIENTRY debugCallbackGL(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
 	const GLchar *message, const void *userParam) {
-	std::cerr << "-----GL message---------------\n";
+	std::cerr << "-------------OpenGL message\n";
+	std::cerr << message;
 	switch (source)
 	{
 	case GL_DEBUG_SOURCE_API:             std::cerr << "Where? API\n";								break;
@@ -34,14 +37,10 @@ static void APIENTRY debugCallbackGL(GLenum source, GLenum type, GLuint id, GLen
 	case GL_DEBUG_SEVERITY_LOW:          std::cerr << "Severity: low\n";							break;
 	case GL_DEBUG_SEVERITY_NOTIFICATION: std::cerr << "Severity: notification\n";					break;
 	}
-	std::cerr << message;
-	std::cerr << "------------------------------\n";
 }
 
 
 int main() {
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-		std::cerr << "Failed to load GLAD!\n";
 	glfwSetErrorCallback(errCallback);
 	glfwInit();
 	GLFWwindow *window = glfwCreateWindow(800, 600, "Wrapper", nullptr, nullptr);
@@ -49,20 +48,22 @@ int main() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 	glfwMakeContextCurrent(window);
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+		std::cerr << "Failed to load GLAD!\n";
+
 	glDebugMessageCallback(debugCallbackGL, nullptr);
+	glEnable(GL_DEBUG_OUTPUT);
+	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+
 	Shader red("res/a.vert", "res/a.frag");
-	GLuint vertices[] = {
+	float vertices[] = {
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
 		0.0f, 0.5f, 0.0f
 	};
-	GLuint triangle;
-	glGenBuffers(1, &triangle);
-	glBindBuffer(GL_ARRAY_BUFFER, triangle);
-	glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-	glEnableVertexAttribArray(0);
+	VAObj triangle(vertices, { 3 * sizeof(float) }, GL_STATIC_DRAW);
 
+	red.use();
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.4, 0.4, 0.4, 1);
@@ -74,7 +75,7 @@ int main() {
 	glfwDestroyWindow(window);
 	glfwTerminate();
 
-	glDeleteBuffers(1, &triangle);
+
 	red.destroy();
 	return 0;
 }
