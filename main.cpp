@@ -61,14 +61,15 @@ int main() {
 		0.5f, -0.5f, 0.0f,
 		0.0f, 0.5f, 0.0f
 	};
-	VAObj triangle(vertices, { 3 * sizeof(float) }, GL_STATIC_DRAW);
+	VAObj triangle(vertices, { 3 * sizeof(float) });
 
 	red.use();
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.4, 0.4, 0.4, 1);
-
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		triangle.use();
+		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, triangle.buffers[0]);
+		glMultiDrawArraysIndirect(GL_TRIANGLE_STRIP, 0, 3, 0);
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}

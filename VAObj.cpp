@@ -16,33 +16,27 @@ void VAObj::m_setVertLayout(const std::initializer_list<size_t> &list) const {
 }
 
 void VAObj::use() const {
-	glBindVertexArray(m_vao);
+	glBindVertexArray(vao);
 }
 
 void VAObj::destroy() const {
-	glDeleteBuffers(2, m_buffers);
-	glDeleteVertexArrays(1, &m_vao);
+	glDeleteBuffers(2, buffers);
+	glDeleteVertexArrays(1, &vao);
 }
 
-VAObj::VAObj(float *vertices, std::initializer_list<std::size_t> layout, GLenum storageType) {
-	glCreateVertexArrays(1, &m_vao);
-	use();
-	glCreateBuffers(1, m_buffers); // Create vbo
-	glVertexArrayVertexBuffer(m_vao, 0, m_buffers[0], 0, 3 * sizeof(float));
-	glVertexArrayBindingDivisor(m_vao, 0, 0);
-	glVertexArrayAttribBinding(m_vao, 0, 0);
+VAObj::VAObj(float *vertices, std::initializer_list<std::size_t> layout) {
+	glCreateBuffers(1, buffers); // Create vbo only
+	glNamedBufferStorage(buffers[0], sizeof(*vertices) / sizeof(float), vertices, 0);
 
-	glEnableVertexArrayAttrib(m_vao, 0);
-	glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
-	glEnableVertexArrayAttrib(m_vao, )
+	glCreateVertexArrays(1, &vao);
 
-		m_setVertLayout(layout);
+	glVertexArrayVertexBuffer(vao, 0, buffers[0], 0, sizeof(*vertices));
+	//glVertexArrayBindingDivisor(vao, 0, 0);
+	glVertexArrayAttribBinding(vao, 0, 0); // Bind format to binding point 0
+	glEnableVertexArrayAttrib(vao, 0);
+	glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE,0);
+	//Binding points act as ids for dsa vbuffers
 }
 
-VAObj::VAObj(const float *vertices, const unsigned *indices, std::initializer_list<std::size_t> layout, GLenum storageType = GL_STATIC_DRAW) {
-	glCreateVertexArrays(1, &m_vao);
-	glCreateBuffers(2, m_buffers);
-
-
-	m_setVertLayout(layout);
+VAObj::VAObj(const float *vertices, const unsigned *indices, std::initializer_list<std::size_t> layout) {
 }
