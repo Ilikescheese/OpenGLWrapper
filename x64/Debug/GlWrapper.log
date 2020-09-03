@@ -1,5 +1,3 @@
-﻿  VAObj.cpp
-  main.cpp
-C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(69,32): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-  Generating Code...
-  GlWrapper.vcxproj -> C:\Users\alex\Documents\GitHub\OpenGLWrapper\x64\Debug\GlWrapper.exe
+﻿  main.cpp
+C:\Users\26116\Documents\GitHub\OpenGLWrapper\main.cpp(86,32): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  GlWrapper.vcxproj -> C:\Users\26116\Documents\GitHub\OpenGLWrapper\x64\Debug\GlWrapper.exe

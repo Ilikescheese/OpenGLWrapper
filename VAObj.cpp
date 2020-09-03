@@ -1,42 +1,37 @@
 #include "VAObj.h"
 
-void VAObj::m_setVertLayout(const std::initializer_list<size_t> &list) const {
-	/*std::size_t stride = 0;
+void OGL::VAObj::m_setLayout(const std::initializer_list<VConf> &list) const {
+	std::size_t stride = 0;
 	for (auto i : list)
-		stride += i;
+		stride += i.size;
 	std::size_t offset = 0;
+	glVertexArrayVertexBuffer(vao, 0, buffers[0], 0, stride);
 	unsigned cur = 0;
 	for (const auto &attrib : list) {
-		glVertexAttribPointer(cur, list.size(), GL_FLOAT, GL_FALSE, stride, (void *)offset);
-		std::cout << "glVertexAttribPointer(" << cur
-			glEnableVertexAttribArray(cur);
-		offset += attrib;
+		glVertexArrayAttribFormat(vao, 0, attrib.componentCount, GL_FLOAT, GL_FALSE, offset);
+		offset += attrib.size;
 		cur++;
-	}*/
+	}
 }
 
-void VAObj::use() const {
+void OGL::VAObj::use() const {
 	glBindVertexArray(vao);
 }
 
-void VAObj::destroy() const {
+void OGL::VAObj::destroy() const {
 	glDeleteBuffers(2, buffers);
 	glDeleteVertexArrays(1, &vao);
 }
 
-VAObj::VAObj(float *vertices, std::initializer_list<std::size_t> layout) {
-	glCreateBuffers(1, buffers); // Create vbo only
-	glNamedBufferStorage(buffers[0], sizeof(*vertices) / sizeof(float), vertices, 0);
-
+OGL::VAObj::VAObj(std::vector<float> &vertices, std::initializer_list<OGL::VConf> layout) {
 	glCreateVertexArrays(1, &vao);
+	use();
 
-	glVertexArrayVertexBuffer(vao, 0, buffers[0], 0, sizeof(*vertices));
-	//glVertexArrayBindingDivisor(vao, 0, 0);
-	glVertexArrayAttribBinding(vao, 0, 0); // Bind format to binding point 0
+	glCreateBuffers(1, &buffers[0]);
+	glNamedBufferStorage(buffers[0], vertices.size() * sizeof(vertices[0]), vertices.data(), 0);
+
+	m_setLayout(layout);
+	glVertexArrayAttribBinding(vao, 0, 0);
 	glEnableVertexArrayAttrib(vao, 0);
-	glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE,0);
 	//Binding points act as ids for dsa vbuffers
-}
-
-VAObj::VAObj(const float *vertices, const unsigned *indices, std::initializer_list<std::size_t> layout) {
 }

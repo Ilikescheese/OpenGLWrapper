@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 
-std::string Shader::m_loadFile(const char *path) {
+std::string OGL::Shader::m_loadFile(const char *path) {
 	try {
 		std::ifstream file(path, std::ios::in);
 		file.exceptions(std::ios::failbit | std::ios::badbit);
@@ -19,7 +19,7 @@ std::string Shader::m_loadFile(const char *path) {
 	return "";
 }
 
-void Shader::m_compile(GLuint shader) {
+void OGL::Shader::m_compile(GLuint shader) {
 	glCompileShader(shader);
 
 	//glDebugMessageCallback covers this
@@ -36,11 +36,11 @@ void Shader::m_compile(GLuint shader) {
 	}*/
 }
 
-void Shader::use() const {
+void OGL::Shader::use() const {
 	glUseProgram(m_program);
 }
 
-void Shader::build(const char *vSource, const char *fSource) {
+void OGL::Shader::build(const char *vSource, const char *fSource) {
 	GLuint vert = glCreateShader(GL_VERTEX_SHADER);
 	GLuint frag = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -66,10 +66,10 @@ void Shader::build(const char *vSource, const char *fSource) {
 	glDeleteShader(frag);
 }
 
-void Shader::destroy() {
+void OGL::Shader::destroy() {
 	glDeleteProgram(m_program);
 }
 
-Shader::Shader(const char *vShadPath, const char *fShadPath) {
+OGL::Shader::Shader(const char *vShadPath, const char *fShadPath) {
 	build(m_loadFile(vShadPath).c_str(), m_loadFile(fShadPath).c_str());
 }

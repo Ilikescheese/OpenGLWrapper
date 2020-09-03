@@ -5,6 +5,8 @@
 #include "Shader.h"
 #include "VAObj.h"
 
+using namespace OGL;
+
 void errCallback(int, const char *message) {
 	std::cerr << "GLFW error:" << message << '\n';
 }
@@ -40,6 +42,11 @@ static void APIENTRY debugCallbackGL(GLenum source, GLenum type, GLuint id, GLen
 }
 
 
+/*
+	TODO OGL Wrapper namespace
+
+*/
+
 int main() {
 	glfwSetErrorCallback(errCallback);
 	glfwInit();
@@ -56,20 +63,31 @@ int main() {
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
 	Shader red("res/a.vert", "res/a.frag");
-	float vertices[] = {
+	std::vector<float> vertices = {
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
 		0.0f, 0.5f, 0.0f
 	};
-	VAObj triangle(vertices, { 3 * sizeof(float) });
+	VAObj triangle(vertices, { 3, 3 * sizeof(float) });
 
+	/*	glCreateVertexArrays(1, &vao);
+	unsigned vbo, vao;
+	glBindVertexArray(vao);
+	glCreateBuffers(1, &vbo);
+	glNamedBufferStorage(vbo, 9 * sizeof(float), vertices.data(), 0);
+	glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(float) * 3);
+	glVertexArrayAttribBinding(vao, 0, 0);
+	glEnableVertexArrayAttrib(vao, 0);
+	glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);*/
 	red.use();
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.4, 0.4, 0.4, 1);
-		triangle.use();
-		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, triangle.buffers[0]);
-		glMultiDrawArraysIndirect(GL_TRIANGLE_STRIP, 0, 3, 0);
+
+		//triangle.use();
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}

@@ -2,17 +2,22 @@
 #include <glad/glad.h>
 #include <initializer_list>
 #include <vector>
-class VAObj
-{
-	void m_setVertLayout(const std::initializer_list<size_t> &list) const;
-public:
-	GLuint buffers[2]; // vbo ebo 
-	GLuint vao;
-	void use() const;
-	void destroy() const;
-	VAObj(float *vertices, std::initializer_list<std::size_t> layout);
-	VAObj(const float *vertices, const unsigned *indices, std::initializer_list<std::size_t> layout);
-	VAObj(VAObj &) = delete;
 
-};
+#include "VertConfig.h"
 
+namespace OGL {
+	class VAObj
+	{
+		void m_setLayout(const std::initializer_list<VConf> &list) const;
+	public:
+		GLuint vao;
+		GLuint buffers[2]; // vbo ebo 
+
+		void use() const;
+		void destroy() const;
+
+		VAObj(std::vector<float> &vertices, std::initializer_list<VConf> layout);
+		VAObj(std::vector<float> &vertices, std::vector<float> &indices, std::initializer_list<VConf> layout);
+		VAObj(VAObj &) = delete;
+	};
+}

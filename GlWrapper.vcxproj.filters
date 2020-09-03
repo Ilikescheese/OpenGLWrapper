@@ -35,5 +35,8 @@
     <ClInclude Include="VAObj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VertConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
