@@ -5,6 +5,6 @@ namespace OGL {
 		unsigned componentCount = 0;
 		std::size_t size = 0;
 		VConf(unsigned count) : size(sizeof(float) *count), componentCount(count) {};
-		VConf() = default;
+		VConf(unsigned count, std::size_t sizeOfComponents) : size(sizeOfComponents), componentCount(count) {};
 	};
 }

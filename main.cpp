@@ -4,7 +4,7 @@
 
 #include "Shader.h"
 #include "VAObj.h"
-
+#include "Initializer.h"
 using namespace OGL;
 
 void errCallback(int, const char *message) {
@@ -41,13 +41,8 @@ static void APIENTRY debugCallbackGL(GLenum source, GLenum type, GLuint id, GLen
 	}
 }
 
-
-/*
-	TODO OGL Wrapper namespace
-
-*/
-
 int main() {
+	//OpenGL setup
 	glfwSetErrorCallback(errCallback);
 	glfwInit();
 	GLFWwindow *window = glfwCreateWindow(800, 600, "Wrapper", nullptr, nullptr);
@@ -57,36 +52,34 @@ int main() {
 	glfwMakeContextCurrent(window);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		std::cerr << "Failed to load GLAD!\n";
-
+	
 	glDebugMessageCallback(debugCallbackGL, nullptr);
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-
+	//Init code for OGL wrapper
+	Initializer init;
+	
 	Shader red("res/a.vert", "res/a.frag");
 	std::vector<float> vertices = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f
+		0.5f, 0.5f, 0.0f,  // top right
+		0.5f, -0.5f, 0.0f,  // bottom right
+		-0.5f, -0.5f, 0.0f,  // bottom left
+		-0.5f, 0.5f, 0.0f   // top left 
 	};
-	VAObj triangle(vertices, { 3, 3 * sizeof(float) });
 
-	/*	glCreateVertexArrays(1, &vao);
-	unsigned vbo, vao;
-	glBindVertexArray(vao);
-	glCreateBuffers(1, &vbo);
-	glNamedBufferStorage(vbo, 9 * sizeof(float), vertices.data(), 0);
-	glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(float) * 3);
-	glVertexArrayAttribBinding(vao, 0, 0);
-	glEnableVertexArrayAttrib(vao, 0);
-	glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);*/
+	std::vector<unsigned> indices = {  // note that we start from 0!
+		0, 1, 3,   // first triangle
+		1, 2, 3    // second triangle
+	};
+	VAObj triangle(vertices,indices, { {3} });
 	red.use();
+
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.4, 0.4, 0.4, 1);
 
-		//triangle.use();
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		triangle.use();
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT,0);
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
