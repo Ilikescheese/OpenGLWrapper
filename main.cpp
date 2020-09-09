@@ -52,13 +52,13 @@ int main() {
 	glfwMakeContextCurrent(window);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		std::cerr << "Failed to load GLAD!\n";
-	
+
 	glDebugMessageCallback(debugCallbackGL, nullptr);
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 	//Init code for OGL wrapper
 	Initializer init;
-	
+
 	Shader red("res/a.vert", "res/a.frag");
 	std::vector<float> vertices = {
 		0.5f, 0.5f, 0.0f,  // top right
@@ -71,22 +71,21 @@ int main() {
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};
-	VAObj triangle(vertices,indices, { {3} });
-	red.use();
+	VAObj triangle(vertices, indices, { { 3 } });
 
+	red.use();
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.4, 0.4, 0.4, 1);
 
 		triangle.use();
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT,0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
 	glfwDestroyWindow(window);
 	glfwTerminate();
-
 
 	red.destroy();
 	return 0;

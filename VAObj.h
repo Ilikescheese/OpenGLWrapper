@@ -17,13 +17,13 @@ namespace OGL {
 		void m_super();
 	public:
 		enum bufNames {
-			vbo,ebo
+			vbo, ebo
 		};
 		friend class Initializer;
 		void use() const;
 		void destroy() const;
 		VAObj(std::vector<float> &vertices, std::initializer_list<VConf> layout);
 		VAObj(std::vector<float> &vertices, std::vector<unsigned> &indices, std::initializer_list<VConf> layout);
-		//VAObj(VAObj &) = delete;
+		VAObj(VAObj &) = delete;
 	};
 }

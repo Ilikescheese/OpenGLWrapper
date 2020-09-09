@@ -70,6 +70,10 @@ void OGL::Shader::destroy() {
 	glDeleteProgram(m_program);
 }
 
+void OGL::Shader::setMat4(const char *parameter, const glm::mat4 &matrix) {
+	glUniformMatrix4fv(glGetAttribLocation(m_program, parameter), 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
 OGL::Shader::Shader(const char *vShadPath, const char *fShadPath) {
 	build(m_loadFile(vShadPath).c_str(), m_loadFile(fShadPath).c_str());
 }

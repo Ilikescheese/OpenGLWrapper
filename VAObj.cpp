@@ -1,7 +1,7 @@
 #include "VAObj.h"
 
 /*
-	TODO:If the same layout is provided, copy the binding point to other VAObj
+	TODO:If the same layout is provided, copy the binding point # to other VAObj
 	TODO:Templatize the data type used in vertices data
 */
 
@@ -11,10 +11,10 @@ void OGL::VAObj::m_setLayout(const std::initializer_list<VConf> &list) {
 		stride += i.size;
 	std::size_t offset = 0;
 
-	glVertexArrayVertexBuffer(m_vao, 0, m_buffers[bufNames::vbo], 0, stride);
+	glVertexArrayVertexBuffer(m_vao, m_bindingPoint, m_buffers[bufNames::vbo], 0, stride);
 	unsigned cur = 0;
 	for (const auto &attrib : list) {
-		glVertexArrayAttribFormat(m_vao, 0, attrib.componentCount, GL_FLOAT, GL_FALSE, offset);
+		glVertexArrayAttribFormat(m_vao, cur, attrib.componentCount, GL_FLOAT, GL_FALSE, offset);
 		glVertexArrayAttribBinding(m_vao, cur, m_bindingPoint);
 		offset += attrib.size;
 		cur++;
@@ -23,7 +23,7 @@ void OGL::VAObj::m_setLayout(const std::initializer_list<VConf> &list) {
 }
 
 OGL::VAObj::VAObj(unsigned setter) {
-	m_bindingPoint = 0;
+	m_bindingPointCounter = setter;
 }
 
 void OGL::VAObj::m_super() {

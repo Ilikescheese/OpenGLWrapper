@@ -1,3 +1,7 @@
-﻿  main.cpp
-C:\Users\alex\Documents\GitHub\OpenGLWrapper\main.cpp(79,32): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-  GlWrapper.vcxproj -> C:\Users\alex\Documents\GitHub\OpenGLWrapper\x64\Debug\GlWrapper.exe
+﻿  VAObj.cpp
+C:\Users\26116\Documents\GitHub\OpenGLWrapper\VAObj.cpp(14,86): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\26116\Documents\GitHub\OpenGLWrapper\VAObj.cpp(17,90): warning C4267: 'argument': conversion from 'size_t' to 'GLuint', possible loss of data
+  main.cpp
+C:\Users\26116\Documents\GitHub\OpenGLWrapper\main.cpp(79,32): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  Generating Code...
+  GlWrapper.vcxproj -> C:\Users\26116\Documents\GitHub\OpenGLWrapper\x64\Debug\GlWrapper.exe
