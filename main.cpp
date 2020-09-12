@@ -71,7 +71,13 @@ int main() {
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};
+<<<<<<< Updated upstream
 	VAObj triangle(vertices, indices, { { 3 } });
+=======
+	VAObj triangle(vertices,indices, { {3} });
+	
+	red.use();
+>>>>>>> Stashed changes
 
 	red.use();
 	while (!glfwWindowShouldClose(window)) {
@@ -81,8 +87,8 @@ int main() {
 		triangle.use();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		glfwPollEvents();
 		glfwSwapBuffers(window);
+		glfwPollEvents();
 	}
 	glfwDestroyWindow(window);
 	glfwTerminate();

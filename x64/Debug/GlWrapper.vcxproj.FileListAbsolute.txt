@@ -1,6 +1,0 @@
-C:\Users\26116\source\repos\GlWrapper\x64\Debug\GlWrapper.exe
-C:\Users\26116\source\repos\GlWrapper\x64\Debug\GlWrapper.pdb
-C:\Users\alex\Documents\GitHub\OpenGLWrapper\x64\Debug\GlWrapper.exe
-C:\Users\alex\Documents\GitHub\OpenGLWrapper\x64\Debug\GlWrapper.pdb
-C:\Users\26116\Documents\GitHub\OpenGLWrapper\x64\Debug\GlWrapper.exe
-C:\Users\26116\Documents\GitHub\OpenGLWrapper\x64\Debug\GlWrapper.pdb
