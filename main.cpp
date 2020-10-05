@@ -2,9 +2,18 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+
 #include "Shader.h"
 #include "VAObj.h"
+#include "Texture2DArray.h"
 #include "Initializer.h"
+
+#include "Camera.h"
+
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <tiny_obj_loader.h>
+#include "Image.h"
+
 using namespace OGL;
 
 void errCallback(int, const char *message) {
@@ -14,32 +23,40 @@ void errCallback(int, const char *message) {
 static void APIENTRY debugCallbackGL(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
 	const GLchar *message, const void *userParam) {
 	std::cerr << "-------------OpenGL message\n";
-	std::cerr << message;
+	std::cerr << message << '\n';
 	switch (source)
 	{
-	case GL_DEBUG_SOURCE_API:             std::cerr << "Where? API\n";								break;
-	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   std::cerr << "Where? Window System\n";					break;
-	case GL_DEBUG_SOURCE_SHADER_COMPILER: std::cerr << "Where? Shader Compiler\n";					break;
-	case GL_DEBUG_SOURCE_THIRD_PARTY:     std::cerr << "Where? Third Party\n";						break;
-	case GL_DEBUG_SOURCE_APPLICATION:     std::cerr << "Where? Application\n";						break;
-	case GL_DEBUG_SOURCE_OTHER:           std::cerr << "Where? Other\n";							break;
+	case GL_DEBUG_SOURCE_API:             std::cerr << "Where? API";								break;
+	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   std::cerr << "Where? Window System";						break;
+	case GL_DEBUG_SOURCE_SHADER_COMPILER: std::cerr << "Where? Shader Compiler";					break;
+	case GL_DEBUG_SOURCE_THIRD_PARTY:     std::cerr << "Where? Third Party";						break;
+	case GL_DEBUG_SOURCE_APPLICATION:     std::cerr << "Where? Application";						break;
+	case GL_DEBUG_SOURCE_OTHER:           std::cerr << "Where? Other";								break;
 	}
+	std::cerr << '\n';
 	switch (type) {
-	case GL_INVALID_ENUM:                  std::cerr << "Type: GL_LINVALID_ENUM\n";					break;
-	case GL_INVALID_VALUE:                 std::cerr << "Type: GL_INVALID_VALUE\n";					break;
-	case GL_INVALID_OPERATION:             std::cerr << "Type: GL_INVALID_OPERATION\n";				break;
-	case GL_OUT_OF_MEMORY:                 std::cerr << "Type: GL_OUT_OF_MEMORY\n";					break;
-	case GL_INVALID_FRAMEBUFFER_OPERATION: std::cerr << "Type: GL_INVALID_FRAMEBUFFER_OPERATION\n";	break;
-	default:							   std::cerr << "Type: code=" << type << '\n';				break;
+	case GL_INVALID_ENUM:                  std::cerr << "Type: GL_INVALID_ENUM";					break;
+	case GL_INVALID_VALUE:                 std::cerr << "Type: GL_INVALID_VALUE";					break;
+	case GL_INVALID_OPERATION:             std::cerr << "Type: GL_INVALID_OPERATION";				break;
+	case GL_OUT_OF_MEMORY:                 std::cerr << "Type: GL_OUT_OF_MEMORY";					break;
+	case GL_INVALID_FRAMEBUFFER_OPERATION: std::cerr << "Type: GL_INVALID_FRAMEBUFFER_OPERATION";	break;
+	default:							   std::cerr << "Type: code=" << type;						break;
 	}
+	std::cerr << '\n';
 	switch (severity)
 	{
-	case GL_DEBUG_SEVERITY_HIGH:         std::cerr << "Severity: high\n";							break;
-	case GL_DEBUG_SEVERITY_MEDIUM:       std::cerr << "Severity: medium\n";							break;
-	case GL_DEBUG_SEVERITY_LOW:          std::cerr << "Severity: low\n";							break;
-	case GL_DEBUG_SEVERITY_NOTIFICATION: std::cerr << "Severity: notification\n";					break;
+	case GL_DEBUG_SEVERITY_HIGH:         std::cerr << "Severity: high";								break;
+	case GL_DEBUG_SEVERITY_MEDIUM:       std::cerr << "Severity: medium";							break;
+	case GL_DEBUG_SEVERITY_LOW:          std::cerr << "Severity: low";								break;
+	case GL_DEBUG_SEVERITY_NOTIFICATION: std::cerr << "Severity: notification";						break;
 	}
+	std::cerr << "\n--------------------------\n";
 }
+ 
+/*
+	TODO: decide which objects are destroy()'d or deconstruct when out of scope
+	TODO: clean up headers, make a pch
+*/
 
 int main() {
 	//OpenGL setup
@@ -56,35 +73,53 @@ int main() {
 	glDebugMessageCallback(debugCallbackGL, nullptr);
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION,0,nullptr, GL_FALSE); // disable notifications
 	//Init code for OGL wrapper
 	Initializer init;
 
-	Shader red("res/a.vert", "res/a.frag");
 	std::vector<float> vertices = {
-		0.5f, 0.5f, 0.0f,  // top right
-		0.5f, -0.5f, 0.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  // bottom left
-		-0.5f, 0.5f, 0.0f   // top left 
+		// positions          // colors           // texture coords
+		0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // top right
+		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   // bottom right
+		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   // bottom left
+		-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f    // top left 
 	};
 
 	std::vector<unsigned> indices = {  // note that we start from 0!
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};
-<<<<<<< Updated upstream
-	VAObj triangle(vertices, indices, { { 3 } });
-=======
-	VAObj triangle(vertices,indices, { {3} });
-	
-	red.use();
->>>>>>> Stashed changes
 
+	VAObj model(vertices, indices, { { 3 }, { 3 }, { 2 } });
+	//NMShader red("res/a.vert", "res/a.frag");
+	
+	ShaderProg vS("res/aMod.vert",ShaderProgType::Vertex);
+	ShaderProg fS("res/a.frag",ShaderProgType::Fragment);
+	Shader red(vS,fS);
+	
+	Image omegaRon("res/omegaRon.png");
+	Image missing("res/missing.png");
+	Texture2DArray texture({ omegaRon, missing },256,256);
+
+	texture.genHandle();
 	red.use();
+	red.setHandle("tex",texture.handle);
+	red.setInt("layer", 1);
+
+	float cur = 0, prev = 0, delta = 0;	
+	Camera cam(window,800,600);
+		
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.4, 0.4, 0.4, 1);
 
-		triangle.use();
+		prev = cur;
+		cur = glfwGetTime();
+		delta = cur - prev;
+		red.use();
+		cam.update(red, window,delta);
+		
+		model.use();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
@@ -94,5 +129,7 @@ int main() {
 	glfwTerminate();
 
 	red.destroy();
+	texture.destroy();
+	model.destroy();
 	return 0;
 }

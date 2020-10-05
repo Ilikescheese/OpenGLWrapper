@@ -6,23 +6,17 @@
 */
 
 void OGL::VAObj::m_setLayout(const std::initializer_list<VConf> &list) {
-	std::size_t stride = 0;
-	for (auto i : list)
-		stride += i.size;
-	std::size_t offset = 0;
-
-	glVertexArrayVertexBuffer(m_vao, m_bindingPoint, m_buffers[bufNames::vbo], 0, stride);
 	unsigned cur = 0;
+	std::size_t offset = 0;
 	for (const auto &attrib : list) {
+		glEnableVertexArrayAttrib(m_vao, cur);
 		glVertexArrayAttribFormat(m_vao, cur, attrib.componentCount, GL_FLOAT, GL_FALSE, offset);
-<<<<<<< Updated upstream
 		glVertexArrayAttribBinding(m_vao, cur, m_bindingPoint);
-=======
-		glVertexArrayAttribBinding(m_vao,cur, m_bindingPoint);
->>>>>>> Stashed changes
+
 		offset += attrib.size;
 		cur++;
 	}
+	glVertexArrayVertexBuffer(m_vao, m_bindingPoint, m_buffers[bufNames::vbo], 0, offset);
 	glEnableVertexArrayAttrib(m_vao, m_bindingPoint);
 }
 
