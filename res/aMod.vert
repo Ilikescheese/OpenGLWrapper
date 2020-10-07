@@ -8,7 +8,6 @@ layout(location=2) in vec2 uvs;
 
 uniform mat4 proj,view,model;
 out vec2 uv;
-out vec3 colors;
 
 void main() {
 	uv = uvs;

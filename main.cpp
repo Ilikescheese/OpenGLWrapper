@@ -52,10 +52,11 @@ static void APIENTRY debugCallbackGL(GLenum source, GLenum type, GLuint id, GLen
 	}
 	std::cerr << "\n--------------------------\n";
 }
- 
+
 /*
 	TODO: decide which objects are destroy()'d or deconstruct when out of scope
 	TODO: clean up headers, make a pch
+	TODO: Look into binary uploads for caching shaders
 */
 
 int main() {
@@ -73,7 +74,7 @@ int main() {
 	glDebugMessageCallback(debugCallbackGL, nullptr);
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION,0,nullptr, GL_FALSE); // disable notifications
+	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, nullptr, GL_FALSE); // disable notifications
 	//Init code for OGL wrapper
 	Initializer init;
 
@@ -91,24 +92,24 @@ int main() {
 	};
 
 	VAObj model(vertices, indices, { { 3 }, { 3 }, { 2 } });
+
+	ShaderProg vS("res/aMod.vert", ShaderProgType::Vertex);
+	ShaderProg fS("res/a.frag", ShaderProgType::Fragment);
+	Shader red(vS, fS);
 	//NMShader red("res/a.vert", "res/a.frag");
-	
-	ShaderProg vS("res/aMod.vert",ShaderProgType::Vertex);
-	ShaderProg fS("res/a.frag",ShaderProgType::Fragment);
-	Shader red(vS,fS);
-	
+
 	Image omegaRon("res/omegaRon.png");
 	Image missing("res/missing.png");
-	Texture2DArray texture({ omegaRon, missing },256,256);
+	Texture2DArray texture({ omegaRon, missing }, 256, 256);
 
 	texture.genHandle();
 	red.use();
-	red.setHandle("tex",texture.handle);
-	red.setInt("layer", 1);
+	red.setHandle("tex", texture.handle);
+	red.setInt("layer", 0);
 
-	float cur = 0, prev = 0, delta = 0;	
-	Camera cam(window,800,600);
-		
+	float cur = 0, prev = 0, delta = 0;
+	Camera cam(window, 800, 600);
+
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.4, 0.4, 0.4, 1);
@@ -117,8 +118,8 @@ int main() {
 		cur = glfwGetTime();
 		delta = cur - prev;
 		red.use();
-		cam.update(red, window,delta);
-		
+		cam.update(red, window, delta);
+
 		model.use();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

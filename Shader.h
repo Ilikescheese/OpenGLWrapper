@@ -6,11 +6,11 @@ namespace OGL {
 	class Shader : public NMShader
 	{
 		GLuint m_pipeline;
-		void m_check(); //check for link/compilation and output to log
+
 	public:
 		virtual void use() const override;
-		void attach(ShaderProg & vProg,ShaderProg & fProg);
-
+		void attach(ShaderProg &vProg, ShaderProg &fProg);
+		void destroy() const;
 		Shader();
 		Shader(ShaderProg &vProg, ShaderProg &fProg);
 		Shader(Shader &) = delete;

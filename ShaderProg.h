@@ -9,9 +9,10 @@ namespace OGL {
 		Fragment = GL_FRAGMENT_SHADER
 	};
 	class ShaderProg {
+		void m_check(); //check for link/compilation and output to log
 	public:
 		GLuint object;
-		ShaderProg(const std::string &source,ShaderProgType type);
+		ShaderProg(const char *path, ShaderProgType type);
 		ShaderProg(ShaderProg &) = delete;
 		~ShaderProg();
 	};
