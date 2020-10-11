@@ -93,10 +93,11 @@ int main() {
 
 	VAObj model(vertices, indices, { { 3 }, { 3 }, { 2 } });
 
+	/*
 	ShaderProg vS("res/aMod.vert", ShaderProgType::Vertex);
 	ShaderProg fS("res/a.frag", ShaderProgType::Fragment);
-	Shader red(vS, fS);
-	//NMShader red("res/a.vert", "res/a.frag");
+	Shader red(vS, fS);*/
+	NMShader red("res/a.vert", "res/a.frag");
 
 	Image omegaRon("res/omegaRon.png");
 	Image missing("res/missing.png");

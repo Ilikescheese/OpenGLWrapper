@@ -20,6 +20,8 @@ namespace OGL {
 			vbo, ebo
 		};
 		friend class Initializer;
+
+		void render() const;
 		void use() const;
 		void destroy() const;
 		VAObj(std::vector<float> &vertices, std::initializer_list<VConf> layout);

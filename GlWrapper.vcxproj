@@ -167,6 +167,7 @@
     <ClInclude Include="deps\stb_image.h" />
     <ClInclude Include="deviceInfo.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="RenderCmd.h" />
     <ClInclude Include="ShaderProg.h" />
     <ClInclude Include="Initializer.h" />
     <ClInclude Include="loadFile.h" />

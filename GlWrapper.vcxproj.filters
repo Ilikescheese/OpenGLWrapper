@@ -89,5 +89,8 @@
     <ClInclude Include="Image.h">
       <Filter>Header Files\other</Filter>
     </ClInclude>
+    <ClInclude Include="RenderCmd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
