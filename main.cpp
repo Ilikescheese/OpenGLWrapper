@@ -59,6 +59,7 @@
 //	TODO: Look into binary uploads for caching shaders
 //*/
 //
+//
 //int main() {
 //	//OpenGL setup
 //	glfwSetErrorCallback(errCallback);
@@ -99,9 +100,8 @@
 //	Shader red(vS, fS);*/
 //	NMShader red("res/a.vert", "res/a.frag");
 //
-//	Image omegaRon("res/omegaRon.png");
-//	Image missing("res/missing.png");
-//	Texture2DArray texture({ omegaRon, missing }, 256, 256);
+//
+//	Texture2DArray texture(256, 256);
 //
 //	texture.genHandle();
 //	red.use();

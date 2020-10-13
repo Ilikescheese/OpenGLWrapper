@@ -6,10 +6,9 @@ namespace OGL {
 	{
 	protected:
 		GLuint m_object;
-		Texture2D() = default;
 	public:
 		bool immutable = false;
-		
+
 		//Bindless 
 		void genHandle(); //Texture state cannot be changed after this call is made
 		void delHandle() const;
@@ -18,7 +17,8 @@ namespace OGL {
 		//Binded
 		void use(unsigned slot) const; // Bind texture to a texture slot, do not use with bindless
 
-		Texture2D(Image img,bool useMips = true);
+		Texture2D(Image img, bool useMips = true);
+		Texture2D() = default;
 		void destroy() const;
 	};
 }
