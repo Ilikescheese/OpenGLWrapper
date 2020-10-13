@@ -4,10 +4,11 @@
 #include <stb_image.h>
 #include <iostream>
 
-Image::Image(const char *path){
+Image::Image(const char *path) {
+	name = path;
 	data = stbi_load(path, &width, &height, &nChannels, STBI_rgb_alpha);
 	if (!data)
-	std::cerr << "Failed to load image from path '" << path << "'!\n";
+		std::cerr << "Failed to load image from path '" << path << "'!\n";
 }
 
 void Image::destroy() {

@@ -2,7 +2,6 @@
 #include <iostream>
 
 void OGL::Texture2DArray::add(Image &image, unsigned xOffset, unsigned yOffset, unsigned z) {
-
 	glTextureSubImage3D(m_object, 0, xOffset, yOffset, z, image.width, image.height, 1, GL_RGBA, GL_UNSIGNED_BYTE, image.data);
 	image.destroy();
 }
