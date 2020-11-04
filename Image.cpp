@@ -5,6 +5,7 @@
 #include <iostream>
 
 Image::Image(const char *path) {
+	stbi_set_flip_vertically_on_load(true);
 	name = path;
 	data = stbi_load(path, &width, &height, &nChannels, STBI_rgb_alpha);
 	if (!data)

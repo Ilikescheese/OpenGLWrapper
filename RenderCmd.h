@@ -7,7 +7,7 @@ namespace OGL {
 		Lines = GL_LINES
 	};
 
-	//Unsigned type
+	//Unsigned types
 	enum Unsigns : GLuint {
 		Int = GL_UNSIGNED_INT,
 		Short = GL_UNSIGNED_SHORT,
@@ -18,6 +18,5 @@ namespace OGL {
 		unsigned begin = 0;
 		unsigned end;
 		GLuint indicesType = Unsigns::Int;
-
-	}
+	};
 }

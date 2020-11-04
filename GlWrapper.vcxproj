@@ -166,6 +166,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="deps\stb_image.h" />
     <ClInclude Include="deviceInfo.h" />
+    <ClInclude Include="drawFunctions.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="RenderCmd.h" />
     <ClInclude Include="ShaderProg.h" />

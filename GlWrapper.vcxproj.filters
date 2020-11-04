@@ -92,5 +92,8 @@
     <ClInclude Include="RenderCmd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="drawFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

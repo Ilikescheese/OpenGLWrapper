@@ -1,9 +1,9 @@
 #pragma once
-
+#include <string>
 struct Image {
 	unsigned char *data = nullptr;
+	std::string name;
 	int width, height,nChannels;
-	const char *name = nullptr;
 	Image() = default;
 	Image(const char *path);
 	void destroy();

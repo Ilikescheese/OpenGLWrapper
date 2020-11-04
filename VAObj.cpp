@@ -62,4 +62,3 @@ OGL::VAObj::VAObj(std::vector<float> &vertices, std::vector<unsigned> &indices, 
 
 	m_setLayout(layout);
 }
-

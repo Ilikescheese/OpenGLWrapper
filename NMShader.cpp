@@ -59,6 +59,14 @@ void OGL::NMShader::setMat4(const char *parameter, const glm::mat4 &matrix) {
 	glUniformMatrix4fv(glGetUniformLocation(m_program, parameter), 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+void OGL::NMShader::setVec2(const char *parameter, const glm::vec2 &vector) {
+	glUniform2f(glGetUniformLocation(m_program,parameter),vector.x,vector.y);
+}
+
+void OGL::NMShader::setVec4(const char *parameter, const glm::vec4 &vector) {
+	glUniform4f(glGetUniformLocation(m_program, parameter), vector.x, vector.y,vector.z,vector.w);
+}
+
 void OGL::NMShader::setInt(const char *parameter, const GLint &integer) {
 	glUniform1i(glGetUniformLocation(m_program, parameter), integer);
 }
@@ -69,4 +77,8 @@ void OGL::NMShader::setHandle(const char *parameter, const GLuint64 &value) {
 
 OGL::NMShader::NMShader(const char *vShadPath, const char *fShadPath) {
 	build(loadFile(vShadPath).c_str(), loadFile(fShadPath).c_str());
+}
+
+OGL::NMShader::NMShader(NMShader &&rhs) noexcept {
+	m_program = lhs.m_program;
 }
