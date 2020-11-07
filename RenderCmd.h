@@ -16,7 +16,7 @@ namespace OGL {
 	struct RenderCmd {
 		RenderMode mode = RenderMode::Triangles;
 		unsigned begin = 0;
-		unsigned end;
+		unsigned end = 0;
 		GLuint indicesType = Unsigns::Int;
 	};
 }

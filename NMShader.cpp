@@ -12,7 +12,7 @@ void OGL::NMShader::m_compile(GLuint shader) {
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logSize);
 		GLsizei length = logSize;
 		GLchar *log = new GLchar[logSize];
-		glGetShaderInfoLog(status, logSize, &length , log);
+		glGetShaderInfoLog(status, logSize, &length, log);
 		std::cerr << "GL shader compilation failure:" << log << '\n';
 		delete[] log;
 	}
@@ -42,7 +42,7 @@ void OGL::NMShader::build(const char *vSource, const char *fSource) {
 		int logSize;
 		glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &logSize);
 		GLchar *log = new GLchar[logSize];
-		glGetShaderInfoLog(status, logSize, static_cast<GLsizei*>(&logSize), log);
+		glGetShaderInfoLog(status, logSize, static_cast<GLsizei *>(&logSize), log);
 		std::cerr << "GL program linkage failure:" << log << '\n';
 		delete[] log;
 	}
@@ -60,11 +60,11 @@ void OGL::NMShader::setMat4(const char *parameter, const glm::mat4 &matrix) {
 }
 
 void OGL::NMShader::setVec2(const char *parameter, const glm::vec2 &vector) {
-	glUniform2f(glGetUniformLocation(m_program,parameter),vector.x,vector.y);
+	glUniform2f(glGetUniformLocation(m_program, parameter), vector.x, vector.y);
 }
 
 void OGL::NMShader::setVec4(const char *parameter, const glm::vec4 &vector) {
-	glUniform4f(glGetUniformLocation(m_program, parameter), vector.x, vector.y,vector.z,vector.w);
+	glUniform4f(glGetUniformLocation(m_program, parameter), vector.x, vector.y, vector.z, vector.w);
 }
 
 void OGL::NMShader::setInt(const char *parameter, const GLint &integer) {
@@ -80,5 +80,5 @@ OGL::NMShader::NMShader(const char *vShadPath, const char *fShadPath) {
 }
 
 OGL::NMShader::NMShader(NMShader &&rhs) noexcept {
-	m_program = lhs.m_program;
+	m_program = rhs.m_program;
 }

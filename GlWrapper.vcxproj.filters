@@ -13,7 +13,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\other">
+    <Filter Include="Header Files\extras">
       <UniqueIdentifier>{4b0cdadc-43d0-4aa1-84d3-e4422464e9b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -23,9 +23,6 @@
     </ClCompile>
     <ClCompile Include="VAObj.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Header Files\other</Filter>
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
       <Filter>Source Files</Filter>
@@ -48,6 +45,9 @@
     <ClCompile Include="Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="extras\Camera.cpp">
+      <Filter>Header Files\extras</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VAObj.h">
@@ -59,14 +59,11 @@
     <ClInclude Include="Initializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files\other</Filter>
-    </ClInclude>
     <ClInclude Include="Texture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="deps\stb_image.h">
-      <Filter>Header Files\other</Filter>
+      <Filter>Header Files\extras</Filter>
     </ClInclude>
     <ClInclude Include="NMShader.h">
       <Filter>Header Files</Filter>
@@ -87,13 +84,16 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
-      <Filter>Header Files\other</Filter>
+      <Filter>Header Files\extras</Filter>
     </ClInclude>
     <ClInclude Include="RenderCmd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="drawFunctions.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="extras\Camera.h">
+      <Filter>Header Files\extras</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

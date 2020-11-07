@@ -1,6 +1,6 @@
-#include "Camera.h"
+/*#include "Camera.h"
 
-#include "NMShader.h"
+#include "../NMShader.h"
 #include <iostream>
 static float curX = 0, curY = 0;
 void Camera::m_cursor(GLFWwindow *window, double xPos, double yPos) {
@@ -65,7 +65,7 @@ void Camera::update(OGL::NMShader &shader, GLFWwindow *window, float delta) {
 	shader.setMat4("model", model);
 }
 
-Camera::Camera(GLFWwindow *window,unsigned wWidth,unsigned wHeight) {
+Camera::Camera(GLFWwindow *window, unsigned wWidth, unsigned wHeight) {
 	//Lock the cursor
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	//Callback for getting cursor coords
@@ -76,4 +76,4 @@ Camera::Camera(GLFWwindow *window,unsigned wWidth,unsigned wHeight) {
 	prevCursY = wHeight / 2;
 
 	m_calcDirs();
-}
+}*/

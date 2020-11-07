@@ -46,7 +46,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -151,8 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="deps\glad\src\glad.c" />
+    <ClCompile Include="extras\Camera.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ShaderProg.cpp" />
     <ClCompile Include="main.cpp" />
@@ -163,10 +163,10 @@
     <ClCompile Include="VAObj.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="deps\stb_image.h" />
     <ClInclude Include="deviceInfo.h" />
     <ClInclude Include="drawFunctions.h" />
+    <ClInclude Include="extras\Camera.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="RenderCmd.h" />
     <ClInclude Include="ShaderProg.h" />
