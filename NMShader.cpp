@@ -63,6 +63,10 @@ void OGL::NMShader::setVec2(const char *parameter, const glm::vec2 &vector) {
 	glUniform2f(glGetUniformLocation(m_program, parameter), vector.x, vector.y);
 }
 
+void OGL::NMShader::setVec3(const char *parameter, const glm::vec3 &vector) {
+	glUniform3f(glGetUniformLocation(m_program, parameter), vector.x, vector.y, vector.z);
+}
+
 void OGL::NMShader::setVec4(const char *parameter, const glm::vec4 &vector) {
 	glUniform4f(glGetUniformLocation(m_program, parameter), vector.x, vector.y, vector.z, vector.w);
 }

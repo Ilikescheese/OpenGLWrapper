@@ -17,6 +17,7 @@ namespace OGL {
 		RenderMode mode = RenderMode::Triangles;
 		unsigned begin = 0;
 		unsigned end = 0;
+		unsigned instCount = 0;
 		GLuint indicesType = Unsigns::Int;
 	};
 }
