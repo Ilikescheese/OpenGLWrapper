@@ -1,4 +1,4 @@
-/*#include "Camera.h"
+#include "Camera.h"
 
 #include "../NMShader.h"
 #include <iostream>
@@ -76,4 +76,4 @@ Camera::Camera(GLFWwindow *window, unsigned wWidth, unsigned wHeight) {
 	prevCursY = wHeight / 2;
 
 	m_calcDirs();
-}*/
+}

@@ -7,6 +7,7 @@ void OGL::ShaderProg::m_check() {
 		GL_VERTEX_SHADER,
 		GL_FRAGMENT_SHADER
 	};
+	//glValidateProgramPipeLine
 	for (int i = 0; i < 3; i++) {
 		GLint good;
 		glGetProgramPipelineiv(target[i], GL_LINK_STATUS, &good);
@@ -21,10 +22,10 @@ void OGL::ShaderProg::m_check() {
 	}
 }
 
-
 OGL::ShaderProg::ShaderProg(const char *path, ShaderProgType type) {
 	std::string s = OGL::loadFile(path);
 	const char *src = s.c_str();
+	glProgramParameter(object, GL_PROGRAM_SEPARABLE, GL_TRUE);
 	object = glCreateShaderProgramv((GLenum)type, 1, &src);
 	m_check();
 }
