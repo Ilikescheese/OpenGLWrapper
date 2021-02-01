@@ -6,7 +6,6 @@ namespace OGL {
 	class Shader : public NMShader
 	{
 		GLuint m_pipeline;
-
 	public:
 		virtual void use() const override;
 		void attach(ShaderProg &vProg, ShaderProg &fProg);

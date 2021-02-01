@@ -1,3 +1,4 @@
+#include "wrapperPch.h"
 #include "ShaderProg.h"
 
 void OGL::ShaderProg::m_check() {
@@ -25,7 +26,7 @@ void OGL::ShaderProg::m_check() {
 OGL::ShaderProg::ShaderProg(const char *path, ShaderProgType type) {
 	std::string s = OGL::loadFile(path);
 	const char *src = s.c_str();
-	glProgramParameter(object, GL_PROGRAM_SEPARABLE, GL_TRUE);
+	glProgramParameteri(object, GL_PROGRAM_SEPARABLE, GL_TRUE);
 	object = glCreateShaderProgramv((GLenum)type, 1, &src);
 	m_check();
 }

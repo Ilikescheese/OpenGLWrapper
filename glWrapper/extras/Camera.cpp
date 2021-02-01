@@ -1,7 +1,7 @@
+#include "wrapperPch.h"
 #include "Camera.h"
-
 #include "../NMShader.h"
-#include <iostream>
+
 static float curX = 0, curY = 0;
 void Camera::m_cursor(GLFWwindow *window, double xPos, double yPos) {
 	curX = xPos;
@@ -43,8 +43,7 @@ void Camera::m_calcDirs() {
 	up = glm::normalize(glm::cross(right, front));
 }
 
-
-void Camera::update(OGL::NMShader &shader, GLFWwindow *window, float delta) {
+glm::mat4 Camera::update(GLFWwindow *window, float delta) {
 	float vel = speed * delta;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		position += front * vel;
@@ -59,21 +58,19 @@ void Camera::update(OGL::NMShader &shader, GLFWwindow *window, float delta) {
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		position -= up * vel;
 	m_calcDirs();
-	view = glm::lookAt(position, position + front, up);
-	shader.setMat4("proj", proj);
-	shader.setMat4("view", view);
-	shader.setMat4("model", model);
+
+	glm::mat4 view = glm::lookAt(position, position + front, up);
+	glm::mat4 proj = glm::perspective(glm::radians(60.0f), float(m_winW / m_winH), 0.1f, 100.0f);
+	return proj * view;
 }
 
-Camera::Camera(GLFWwindow *window, unsigned wWidth, unsigned wHeight) {
+Camera::Camera(GLFWwindow *window, unsigned wWidth, unsigned wHeight) : m_winW(wWidth),m_winH(wHeight) {
 	//Lock the cursor
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	//Callback for getting cursor coords
 	glfwSetCursorPosCallback(window, m_cursor);
-
-	proj = glm::perspective(glm::radians(60.0f), float(wWidth / wHeight), 0.1f, 100.0f);
-	prevCursX = wWidth / 2;
-	prevCursY = wHeight / 2;
+	prevCursX = m_winW / 2;
+	prevCursY = m_winH / 2;
 
 	m_calcDirs();
 }

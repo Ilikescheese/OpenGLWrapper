@@ -1,3 +1,4 @@
+#include "wrapperPch.h"
 #include "Texture2D.h"
 
 void OGL::Texture2D::genHandle(){

@@ -1,5 +1,5 @@
 #pragma once
-#include <glad/glad.h>
+#include "wrapperPch.h"
 #include "loadFile.h"
 //Objects encapsulating vertex shaders and fragment shaders
 //To be used in conjunction with OGL::Shader

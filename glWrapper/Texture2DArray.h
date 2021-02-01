@@ -1,7 +1,7 @@
 #pragma once
+#include "wrapperPch.h"
 #include "Texture2D.h"
 #include "Image.h"
-#include <vector>
 namespace OGL {
 	class Texture2DArray : public Texture2D
 	{

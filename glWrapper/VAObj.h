@@ -1,8 +1,5 @@
 #pragma once
-#include <glad/glad.h>
-#include <initializer_list>
-#include <vector>
-
+#include "wrapperPch.h"
 #include "VertConfig.h"
 #include "RenderCmd.h"
 namespace OGL {
@@ -23,7 +20,13 @@ namespace OGL {
 		};
 
 		void use() const;
+
+		//Do not call if the object has been constructed w/ a non empty constructor
+		void create(std::vector<float> &vertices, std::initializer_list<VConf> layout);
+		void create(std::vector<float> &vertices, std::vector<unsigned> &indices, std::initializer_list<VConf> layout);
+
 		void destroy() const;
+
 		VAObj(std::vector<float> &vertices, std::initializer_list<VConf> layout);
 		VAObj(std::vector<float> &vertices, std::vector<unsigned> &indices, std::initializer_list<VConf> layout);
 		VAObj() = default;

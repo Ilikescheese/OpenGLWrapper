@@ -1,5 +1,5 @@
 #pragma once
-#include <cstring>
+#include "wrapperPch.h"
 namespace OGL {
 	struct VConf {
 		unsigned componentCount = 0;

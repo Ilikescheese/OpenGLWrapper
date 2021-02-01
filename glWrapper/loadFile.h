@@ -1,7 +1,5 @@
 #pragma once
-#include <fstream>
-#include <iostream>
-#include <sstream>
+#include "wrapperPch.h"
 
 namespace OGL {
 	static std::string loadFile(const std::string & path) {

@@ -1,8 +1,8 @@
+#include "wrapperPch.h"
 #include "VAObj.h"
 
 /*
 	TODO:If the same layout is provided, copy the binding point # to other VAObj
-	TODO:Templatize the data type used in vertices data
 */
 
 void OGL::VAObj::m_setLayout(const std::initializer_list<VConf> &list) {
@@ -33,6 +33,28 @@ void OGL::VAObj::m_super() {
 
 void OGL::VAObj::use() const {
 	glBindVertexArray(m_vao);
+}
+
+void OGL::VAObj::create(std::vector<float> &vertices, std::initializer_list<VConf> layout) {
+	m_super();
+	//Create vbo and set storage
+	glCreateBuffers(1, m_buffers);
+	glNamedBufferStorage(m_buffers[bufNames::vbo], vertices.size() * sizeof(vertices[0]), vertices.data(), 0);
+
+	m_setLayout(layout);
+}
+
+void OGL::VAObj::create(std::vector<float> &vertices, std::vector<unsigned> &indices, std::initializer_list<VConf> layout) {
+	m_super();
+
+	//Create vbo & ebo,set storage
+	glCreateBuffers(2, m_buffers);
+	glNamedBufferStorage(m_buffers[bufNames::vbo], vertices.size() * sizeof(vertices[0]), vertices.data(), 0);
+	glNamedBufferStorage(m_buffers[bufNames::ebo], indices.size() * sizeof(indices[0]), indices.data(), 0);
+
+	//Manually assign ebo storage to element buffer, this doesnt apply to the vbo as the named storage goes to array buffer by default
+	glVertexArrayElementBuffer(m_vao, m_buffers[bufNames::ebo]);
+	m_setLayout(layout);
 }
 
 void OGL::VAObj::destroy() const {

@@ -1,4 +1,5 @@
 #pragma once
+#include "wrapperPch.h"
 #include "VAObj.h"
 
 //Sets default values for abstracted objects *** Create this before anything else ***

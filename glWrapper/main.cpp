@@ -1,7 +1,5 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
-
+#include "wrapperPch.h"
+/*
 #include "Shader.h"
 #include "VAObj.h"
 #include "Texture2DArray.h"
@@ -59,7 +57,7 @@ static void APIENTRY debugCallbackGL(GLenum source, GLenum type, GLuint id, GLen
 	TODO: Look into binary uploads for caching shaders
 */
 
-
+/*
 int main() {
 	//OpenGL setup
 	glfwSetErrorCallback(errCallback);
@@ -101,7 +99,8 @@ int main() {
 
 	Texture2DArray texture(256, 256);
 
-	//texture.add();
+	Image missing("res/missing.png");
+	texture.add(missing);
 
 	texture.genHandle();
 	red.use();
@@ -136,4 +135,4 @@ int main() {
 	texture.destroy();
 	model.destroy();
 	return 0;
-}
+}*/

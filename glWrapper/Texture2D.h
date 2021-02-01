@@ -1,5 +1,5 @@
 #pragma once
-#include <glad/glad.h>
+#include "wrapperPch.h"
 #include "Image.h"
 namespace OGL {
 	class Texture2D

@@ -1,5 +1,5 @@
+#include "wrapperPch.h"
 #include "Shader.h"
-
 
 void OGL::Shader::use() const {
 	glBindProgramPipeline(m_pipeline);
