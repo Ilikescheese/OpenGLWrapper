@@ -82,7 +82,7 @@ void OGL::NMShader::setVec4(const char *parameter, const glm::vec4 &vector) {
 
 void OGL::NMShader::setUniformBlock(const UBObj &ubo) {
 	//Connect the shader and the ubo to the same binding point
-	unsigned block = glGetUniformBlockIndex(m_program, ubo.name);
+	unsigned block = glGetUniformBlockIndex(m_program, ubo.name.c_str());
 	glUniformBlockBinding(m_program, block, ubo.getBindingPoint());
 }
 

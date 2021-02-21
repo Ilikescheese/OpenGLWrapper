@@ -1,47 +1,38 @@
  #pragma once
 #include "wrapperPch.h"
-
+#include "NMShader.h"
 //TODO: Make bindless, support more layouts etc
 namespace OGL {
 	class UBObj
 	{
 		static inline unsigned m_bindPointCounter = 0;
 		GLuint m_bindingPoint,m_ubo;
+		std::vector<GLint> m_offsets;
+		std::unordered_map<std::string,GLint> m_block;
 	public:
-		std::size_t std140Pad(std::size_t size); //Pad a number of bytes to a mult of 16
-		//The number of floats in the datatype
-		enum std140Types : int {
-			vec1 = 1,
-			vec2 = 2,
-			vec3 = 4,
-			vec4 = 4,
-			mat2 = 4,
-			mat3 = 9,
-			mat4 = 16
-		};
 		GLuint getObject() const;
 		unsigned getBindingPoint() const;
-		const char *name = nullptr;
-		std::vector<std140Types> block;
+		std::string name;
 		void bind();
 		void unbind();
 		void destroy();
+
 		//TODO: functionality for setting the entire block's data with one array of bytes
-		//the "whereIndex" is what element of the block vector to target to get the memory offset for
-		std::size_t getWhereOffset(unsigned idx);
-
+		//Set a single value if you're setting a struct, set the whereIndex to the location of last variable in the struct
 		template<typename T>
-		void setValue(unsigned whereIndex,T &value);
+		void setValue(std::string uniformName, T value);
 
-		//Create using a list of datatypes under the std140 layout
-		void createStd140(const char *blockName, std::initializer_list<std140Types> blockContents);
+		void create(const NMShader &shader);
 
-		UBObj() = default;
+		UBObj(const std::string &blockName) : name(blockName) {};
 	};
 
 	template<typename T>
-	inline void UBObj::setValue(unsigned whereIndex, T &value) {
-		std::size_t offset = getWhereOffset(whereIndex);
-		glBufferSubData(GL_UNIFORM_BUFFER, offset, sizeof(value), &value);
+	inline void UBObj::setValue(std::string uniformName, T value) {
+		auto it = m_block.find(uniformName);
+		if(it != m_block.end())
+			glBufferSubData(GL_UNIFORM_BUFFER, it->second, sizeof(value), &value);
+		else
+			std::cout << "Couldn't find the uniform named '" << uniformName << '\'' << " within the ubo block" << '\n';
 	}
 }
