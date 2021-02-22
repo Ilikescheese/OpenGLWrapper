@@ -25,34 +25,39 @@ void OGL::UBObj::destroy() {
 }
 
 void OGL::UBObj::create(const NMShader &shader) {
+	m_target = &shader;
 	m_bindingPoint = m_bindPointCounter;
 	m_bindPointCounter++;
 	
 	GLint uniformCount = 0;
 	glGetActiveUniformBlockiv(shader.getObject(),m_ubo,GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS,&uniformCount);
 
-	GLint *indices = new GLint[uniformCount];
-	glGetActiveUniformBlockiv(shader.getObject(), m_ubo, GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES,indices);
+	GLuint *indices = new GLuint[uniformCount];
+	glGetActiveUniformBlockiv(shader.getObject(), m_ubo, GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES, reinterpret_cast<GLint *>(indices));
 
 	GLint uniformNameSize = 0;
-	glGetProgramiv(shader.getObject(),GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH,&uniformNameSize);
-	//Add up bytes in block & copy from heap allocated array to vector & check indices
-	m_offsets.reserve(uniformCount);
+	glGetProgramiv(shader.getObject(),GL_ACTIVE_UNIFORM_MAX_LENGTH,&uniformNameSize);
+	GLchar *curUniformName = new GLchar[uniformNameSize];
+	//check for invalid indices & link indices to the names of the uniform
+	m_block.reserve(uniformCount);
 	for (int i = 0; i < uniformCount; i++) {
 		if (indices[i] == GL_INVALID_INDEX)
 			std::cerr << "Invalid uniform name at index #" << indices[i] << '\n';
-		GLint offset = 0;
-		glGetActiveUniformsiv(shader.getObject(),1,reinterpret_cast<GLuint*>(indices[i]),GL_UNIFORM_OFFSET,&offset);
-		m_offsets.push_back(offset);
 
-		GLchar *curUniformName = nullptr;
-		glGetActiveUniform(shader.getObject(),indices[i], uniformNameSize,nullptr,nullptr,nullptr,curUniformName);
+		GLint size = 0;
+		GLsizei nameLen = 0;
+		GLenum type = GL_NONE;
+		glGetActiveUniform(shader.getObject(),indices[i], uniformNameSize,&nameLen,&size,&type,curUniformName);
 		m_block.insert(std::make_pair(std::string(curUniformName),indices[i]));
 	}
+	delete[] curUniformName;
+
+	GLint size = 0;
+	glGetActiveUniformBlockiv(shader.getObject(), m_ubo, GL_UNIFORM_BLOCK_DATA_SIZE, &size);
 
 	glGenBuffers(1,&m_ubo);
 	bind();
-	glBufferData(GL_UNIFORM_BUFFER, m_offsets.front(),nullptr,GL_DYNAMIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, size,nullptr,GL_DYNAMIC_DRAW);
 	unbind();
 	delete[] indices;
 }
