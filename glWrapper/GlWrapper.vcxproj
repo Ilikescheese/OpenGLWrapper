@@ -193,7 +193,6 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="RenderCmd.h" />
     <ClInclude Include="ShaderProg.h" />
-    <ClInclude Include="Initializer.h" />
     <ClInclude Include="loadFile.h" />
     <ClInclude Include="NMShader.h" />
     <ClInclude Include="Shader.h" />

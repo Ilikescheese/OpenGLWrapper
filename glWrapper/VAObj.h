@@ -5,7 +5,7 @@
 namespace OGL {
 	class VAObj
 	{
-		inline static GLuint m_bindingPointCounter;
+		inline static GLuint m_bindingPointCounter = 0;
 		GLuint m_bindingPoint;
 		GLuint m_vao;
 		GLuint m_buffers[2]; // vbo|ebo 

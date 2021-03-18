@@ -65,9 +65,6 @@
     <ClInclude Include="VertConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Initializer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Texture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
